@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Radium, { StyleRoot } from 'radium';
 import './App.css';
-import Person from '../components/Persons/Person/Person';
+// import Person from '../components/Persons/Person/Person';
+import Cockpit from '../components/Cockpit/Cockpit';
+import Persons from '../components/Persons/Persons';
 
 const App = props => {
 
@@ -113,8 +115,12 @@ const App = props => {
   if (userState.showPerson) {
     user = (
       <div>
-
-        {userState.user.map((user, index) => {
+        <Persons
+          users={userState.user}
+          clicked={deletePersonHandler}
+          changed={nameChangeHandler}
+        />
+        {/* {userState.user.map((user, index) => {
           return <Person
             // key={Math.floor(Math.random() * 100)}
             name={user.name}
@@ -123,7 +129,7 @@ const App = props => {
             key={user.id}
             changed={(event) => nameChangeHandler(event, user.id)} />
         })
-        }
+        } */}
 
         {/* <Person
           name={userState.user[0].name}
@@ -150,33 +156,13 @@ const App = props => {
     console.log(user)
   }
 
-  const classes = [];
-
-  if (userState.user.length <= 2) {
-    classes.push("red"); // className="red"
-    console.log("<= 2");
-  }
-
-  if (userState.user.length <= 1) {
-    classes.push("bold"); // className="bold"
-    console.log("<= 1");
-  }
-
-  if (userState.user.length < 1) {
-    classes.push("large");
-    console.log("< 0");
-  }
-
   return (
     <StyleRoot>
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(" ")}>This is realling working! DUH MAX its working :P</p>
-        < button
-          // onClick={switchNameHandler}
-          onClick={onToggleHandler}
-          style={style} > Switch Name</button>
-
+        <Cockpit
+          user={userState.user}
+          toggle={onToggleHandler}
+          style={style} />
         {user}
         {/* {userState.showPerson ?
         <div>
